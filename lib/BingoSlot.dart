@@ -136,7 +136,7 @@ class CardContent extends StatelessWidget {
               child: AutoSizeText(
                 title,
                 maxLines: 2,
-                minFontSize: 10,
+                minFontSize: 1,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),

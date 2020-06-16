@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterbingo/BingoSlot.dart';
 
@@ -6,6 +9,7 @@ class GridWidget extends StatefulWidget {
   final bool useDemoList;
 
   const GridWidget({Key key, this.useDemoList}) : super(key: key);
+
   @override
   _GridWidgetState createState() => _GridWidgetState();
 }
@@ -13,6 +17,7 @@ class GridWidget extends StatefulWidget {
 class _GridWidgetState extends State<GridWidget> {
   final int columns = 4;
   final int rows = 4;
+  final double headerSize = 60;
 
   //todo get list from firebase
   List options = [
@@ -28,9 +33,8 @@ class _GridWidgetState extends State<GridWidget> {
     "Desktop is BETA",
     "Thanks community",
     "#FlutterDay",
-    "Responsive widgets"
-    "Null Safety",
-    "Fuchsia support",
+    "Responsive widgets",
+    "Null safety",
     "Dash color change",
     "BREAKING CHANGES!"
   ];
@@ -39,46 +43,66 @@ class _GridWidgetState extends State<GridWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Card(
-          elevation: 5,
-          margin: EdgeInsets.all(10),
-          clipBehavior: Clip.antiAlias,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor,
-                    boxShadow: [
-                      BoxShadow(blurRadius: 2, spreadRadius: 1)
-                    ]
+        child: LayoutBuilder(builder: (context, constraint) {
+          double maxContainerSize = constraint.maxWidth + headerSize < constraint.maxHeight
+              ? constraint.maxWidth
+              : (constraint.maxHeight * 0.9) - headerSize;
+          return Container(
+            width: maxContainerSize,
+            height: maxContainerSize + headerSize,
+            child: Card(
+              elevation: 5,
+              margin: EdgeInsets.all(10),
+              clipBehavior: Clip.antiAlias,
+              child: LayoutBuilder(builder: (context, constraint) {
+                double maxGridSize =
+                    min(constraint.maxWidth, constraint.maxHeight);
+                return Container(
+                  width: maxGridSize * 0.8,
+                  height: maxGridSize,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Container(
+                          width: double.infinity,
+                          height: headerSize,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).accentColor,
+                              boxShadow: [
+                                BoxShadow(blurRadius: 2, spreadRadius: 1)
+                              ]),
+                          child: AutoSizeText(
+                            "FlutterDay Bingo",
+                            maxLines: 1,
+                            minFontSize: 1,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.blue[50],
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GridView.count(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          crossAxisCount: columns,
+                          childAspectRatio: 1,
+                          children: <Widget>[
+                            for (int i = 0; i < options.length; i++)
+                              BingoSlot(options[i])
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  child: Text(
-                    "FlutterDay Bingo",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.blue[50],
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold),
-                  )),
-              Padding(
-                padding:
-                    const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
-                child: GridView.count(
-                  shrinkWrap: true,
-                  crossAxisCount: columns,
-                  childAspectRatio: 1,
-                  children: <Widget>[
-                    for (int i = 0; i < options.length; i++)
-                      BingoSlot(options[i])
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+                );
+              }),
+            ),
+          );
+        }),
       ),
     );
   }
