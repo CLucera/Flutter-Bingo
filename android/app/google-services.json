@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "605618736443",
+    "firebase_url": "https://flutter-bingo.firebaseio.com",
+    "project_id": "flutter-bingo",
+    "storage_bucket": "flutter-bingo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605618736443:android:5322cad0b6e5edbb17bb1e",
+        "android_client_info": {
+          "package_name": "com.hatdroid.flutterbingo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605618736443-64i4446i7dkqcqj7megstg4s2dlo2ebc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAylt2sfhOV2T1ReJGfApUW9nex5Suq-iw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605618736443-64i4446i7dkqcqj7megstg4s2dlo2ebc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
