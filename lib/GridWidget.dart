@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterbingo/BingoSlot.dart';
 
@@ -44,9 +45,10 @@ class _GridWidgetState extends State<GridWidget> {
     return Scaffold(
       body: Center(
         child: LayoutBuilder(builder: (context, constraint) {
-          double maxContainerSize = constraint.maxWidth + headerSize < constraint.maxHeight
-              ? constraint.maxWidth
-              : (constraint.maxHeight * 0.9) - headerSize;
+          double maxContainerSize =
+              constraint.maxWidth + headerSize < constraint.maxHeight
+                  ? constraint.maxWidth
+                  : (constraint.maxHeight * 0.9) - headerSize;
           return Container(
             width: maxContainerSize,
             height: maxContainerSize + headerSize,
@@ -83,18 +85,16 @@ class _GridWidgetState extends State<GridWidget> {
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold),
                           )),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GridView.count(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          crossAxisCount: columns,
-                          childAspectRatio: 1,
-                          children: <Widget>[
-                            for (int i = 0; i < options.length; i++)
-                              BingoSlot(options[i])
-                          ],
-                        ),
+                      GridView.count(
+                        padding: EdgeInsets.all(8),
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        crossAxisCount: columns,
+                        childAspectRatio: 1,
+                        children: <Widget>[
+                          for (int i = 0; i < options.length; i++)
+                            BingoSlot(options[i])
+                        ],
                       ),
                     ],
                   ),
